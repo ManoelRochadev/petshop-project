@@ -21,6 +21,7 @@ import {
   SimpleGrid,
   chakra,
   VisuallyHidden,
+  CSSReset,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -28,7 +29,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link as LinkRouter } from 'react-router-dom';
 import { ReactNode } from 'react';
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import imageLogo from '../../assets/ifaro.png'
@@ -40,74 +41,81 @@ export function Home() {
 
   return (
     <>
-    <Box display='block'>
-      <Flex
-        bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('gray.600', 'white')}
-        minH={'60px'}
-        py={{ base: 2 }}
-        px={{ base: 4 }}
-        borderBottom={1}
-        borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
-        align={'center'}>
+      <Box display='block'>
         <Flex
-          flex={{ base: 1, md: 'auto' }}
-          ml={{ base: -2 }}
-          display={{ base: 'flex', md: 'none' }}>
-          <IconButton
-            onClick={onToggle}
-            icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-            }
-            variant={'ghost'}
-            aria-label={'Toggle Navigation'}
-          />
-        </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily={'heading'}
-            color={useColorModeValue('gray.800', 'white')}>
-            <Img boxSize='38px' w='58px' h='auto' src={imageLogo}/>
-          </Text>
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <DesktopNav />
+          bg={useColorModeValue('white', 'gray.800')}
+          color={useColorModeValue('gray.600', 'white')}
+          minH={'60px'}
+          py={{ base: 2 }}
+          px={{ base: 4 }}
+          borderBottom={1}
+          borderStyle={'solid'}
+          borderColor={useColorModeValue('gray.200', 'gray.900')}
+          align={'center'}>
+          <Flex
+            flex={{ base: 1, md: 'auto' }}
+            ml={{ base: -2 }}
+            display={{ base: 'flex', md: 'none' }}>
+            <IconButton
+              onClick={onToggle}
+              icon={
+                isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+              }
+              variant={'ghost'}
+              aria-label={'Toggle Navigation'}
+            />
           </Flex>
+          <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
+            <Text
+              textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
+              fontFamily={'heading'}
+              color={useColorModeValue('gray.800', 'white')}>
+              <Img boxSize='38px' w='58px' h='auto' src={imageLogo} />
+            </Text>
+            <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+              <DesktopNav />
+            </Flex>
+          </Flex>
+
+          <Stack
+            flex={{ base: 1, md: 0 }}
+            justify={'flex-end'}
+            direction={'row'}
+            spacing={6}>
+            <Button
+              as={'a'}
+              fontSize={'sm'}
+              fontWeight={400}
+              variant={'link'}
+            >
+              <LinkRouter
+              style={{
+                color: '#718096'
+              }}
+              to='/register/user'
+              >
+                Cadastre-se
+              </LinkRouter>
+            </Button>
+            <Button
+              display={{ base: 'none', md: 'inline-flex' }}
+              fontSize={'sm'}
+              fontWeight={600}
+              color={'white'}
+              bg={'green.400'}
+              _hover={{
+                bg: 'green.300',
+              }}>
+              Entrar
+            </Button>
+          </Stack>
         </Flex>
 
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={'flex-end'}
-          direction={'row'}
-          spacing={6}>
-          <Button
-            as={'a'}
-            fontSize={'sm'}
-            fontWeight={400}
-            variant={'link'}
-            href={'/register/user'}>
-            Cadastre-se
-          </Button>
-          <Button
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'green.400'}
-            _hover={{
-              bg: 'green.300',
-            }}>
-            Entrar
-          </Button>
-        </Stack>
-      </Flex>
-
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
-      </Collapse>
-    </Box>
-    <Container maxW={'3xl'}>
+        <Collapse in={isOpen} animateOpacity>
+          <MobileNav />
+        </Collapse>
+      </Box>
+      <Container maxW={'3xl'}>
         <Stack
           as={Box}
           textAlign={'center'}
@@ -119,7 +127,7 @@ export function Home() {
             lineHeight={'110%'}>
             Agende serviços <br />
             <Text as={'span'} color={'green.400'}>
-            para seu pet
+              para seu pet
             </Text>
           </Heading>
           <Text color={'gray.500'}>
@@ -132,8 +140,8 @@ export function Home() {
             alignSelf={'center'}
             position={'relative'}>
             <Button
-            type='button'
-            onClick={() => navigate('/register/user')}
+              type='button'
+              onClick={() => navigate('/register/user')}
               colorScheme={'green'}
               bg={'green.400'}
               rounded={'full'}
@@ -147,47 +155,51 @@ export function Home() {
         </Stack>
       </Container>
       <Box
-      bg={useColorModeValue('gray.50', 'gray.900')}
-      color={useColorModeValue('gray.700', 'gray.200')}>
-      <Container as={Stack} maxW={'6xl'} py={10}>
-        <SimpleGrid
-          templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 2fr' }}
-          spacing={8}>
-          <Stack spacing={6}>
-            <Box>
-            <Img w='250px' h='auto' src={imageLogo}/>
-            </Box>
-            <Text fontSize={'sm'}>
-             © 2022 Ifaro. Direitos reservados.
-            </Text>
-            <Stack direction={'row'} spacing={6}>
-              <SocialButton label={'Twitter'} href={'#'}>
-                <FaTwitter />
-              </SocialButton>
-              <SocialButton label={'YouTube'} href={'#'}>
-                <FaYoutube />
-              </SocialButton>
-              <SocialButton label={'Instagram'} href={'#'}>
-                <FaInstagram />
-              </SocialButton>
+        bg={useColorModeValue('gray.50', 'gray.900')}
+        color={useColorModeValue('gray.700', 'gray.200')}>
+        <Container as={Stack} maxW={'6xl'} py={10}>
+          <SimpleGrid
+            templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 2fr' }}
+            spacing={8}>
+            <Stack spacing={6}>
+              <Box>
+                <Img w='250px' h='auto' src={imageLogo} />
+              </Box>
+              <Text fontSize={'sm'}>
+                © 2022 Ifaro. Direitos reservados.
+              </Text>
+              <Stack direction={'row'} spacing={6}>
+                <SocialButton label={'Twitter'} href={'#'}>
+                  <FaTwitter />
+                </SocialButton>
+                <SocialButton label={'YouTube'} href={'#'}>
+                  <FaYoutube />
+                </SocialButton>
+                <SocialButton label={'Instagram'} href={'#'}>
+                  <FaInstagram />
+                </SocialButton>
+              </Stack>
             </Stack>
-          </Stack>
-          <Stack align={'flex-start'}>
-            <ListHeader>Empresa</ListHeader>
-            <Link href={'#'}>Sobre</Link>
-            <Link href={'#'}>Blog</Link>
-            <Link href={'#'}>Contato</Link>
-            <Link href={'#'}>Preço</Link>
-            <Link href={'#'}>Depoimentos</Link>
-          </Stack>
-          <Stack align={'flex-start'}>
-            <ListHeader>Área funcionários</ListHeader>
-            <Link href={'/register/doctor'}>Veterinário</Link>
-            <Link href={'/register/groomer'}>Groomer</Link>
-          </Stack>
-        </SimpleGrid>
-      </Container>
-    </Box>
+            <Stack align={'flex-start'}>
+              <ListHeader>Empresa</ListHeader>
+              <Link href={'#'}>Sobre</Link>
+              <Link href={'#'}>Blog</Link>
+              <Link href={'#'}>Contato</Link>
+              <Link href={'#'}>Preço</Link>
+              <Link href={'#'}>Depoimentos</Link>
+            </Stack>
+            <Stack align={'flex-start'} >
+              <ListHeader>Área funcionários</ListHeader>
+              <LinkRouter style={{
+                color: '#2d3748'
+              }} to='/register/doctor'>Veterinário</LinkRouter>
+              <LinkRouter to='/register/groomer' style={{
+                color: '#2d3748'
+              }} >Groomer</LinkRouter>
+            </Stack>
+          </SimpleGrid>
+        </Container>
+      </Box>
     </>
   );
 }
