@@ -31,7 +31,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { ReactNode } from 'react';
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
-import { BiMailSend } from 'react-icons/bi';
+import imageLogo from '../../assets/ifaro.png'
 
 export function Home() {
   const { isOpen, onToggle } = useDisclosure();
@@ -69,7 +69,7 @@ export function Home() {
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}>
-            <Img boxSize='38px' w='58px' h='auto' src='src/assets/ifaro.png'/>
+            <Img boxSize='38px' w='58px' h='auto' src={imageLogo}/>
           </Text>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
@@ -155,7 +155,7 @@ export function Home() {
           spacing={8}>
           <Stack spacing={6}>
             <Box>
-            <Img w='250px' h='auto' src='src/assets/ifaro.png'/>
+            <Img w='250px' h='auto' src={imageLogo}/>
             </Box>
             <Text fontSize={'sm'}>
              © 2022 Ifaro. Direitos reservados.
