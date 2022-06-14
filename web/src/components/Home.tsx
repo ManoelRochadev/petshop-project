@@ -18,6 +18,9 @@ import {
   Heading,
   Container,
   createIcon,
+  SimpleGrid,
+  chakra,
+  VisuallyHidden,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -26,6 +29,9 @@ import {
   ChevronRightIcon,
 } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
+import { ReactNode } from 'react';
+import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { BiMailSend } from 'react-icons/bi';
 
 export function Home() {
   const { isOpen, onToggle } = useDisclosure();
@@ -63,7 +69,7 @@ export function Home() {
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}>
-            <Img boxSize='38px' objectFit='cover' src='src/assets/ifaro.png'/>
+            <Img boxSize='38px' w='58px' h='auto' src='src/assets/ifaro.png'/>
           </Text>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
@@ -140,6 +146,48 @@ export function Home() {
           </Stack>
         </Stack>
       </Container>
+      <Box
+      bg={useColorModeValue('gray.50', 'gray.900')}
+      color={useColorModeValue('gray.700', 'gray.200')}>
+      <Container as={Stack} maxW={'6xl'} py={10}>
+        <SimpleGrid
+          templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 2fr' }}
+          spacing={8}>
+          <Stack spacing={6}>
+            <Box>
+            <Img w='250px' h='auto' src='src/assets/ifaro.png'/>
+            </Box>
+            <Text fontSize={'sm'}>
+             © 2022 Ifaro. Direitos reservados.
+            </Text>
+            <Stack direction={'row'} spacing={6}>
+              <SocialButton label={'Twitter'} href={'#'}>
+                <FaTwitter />
+              </SocialButton>
+              <SocialButton label={'YouTube'} href={'#'}>
+                <FaYoutube />
+              </SocialButton>
+              <SocialButton label={'Instagram'} href={'#'}>
+                <FaInstagram />
+              </SocialButton>
+            </Stack>
+          </Stack>
+          <Stack align={'flex-start'}>
+            <ListHeader>Empresa</ListHeader>
+            <Link href={'#'}>Sobre</Link>
+            <Link href={'#'}>Blog</Link>
+            <Link href={'#'}>Contato</Link>
+            <Link href={'#'}>Preço</Link>
+            <Link href={'#'}>Depoimentos</Link>
+          </Stack>
+          <Stack align={'flex-start'}>
+            <ListHeader>Área funcionários</ListHeader>
+            <Link href={'/register/doctor'}>Veterinário</Link>
+            <Link href={'/register/groomer'}>Groomer</Link>
+          </Stack>
+        </SimpleGrid>
+      </Container>
+    </Box>
     </>
   );
 }
@@ -297,41 +345,62 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: 'Inspiration',
+    label: 'Serviços',
     children: [
       {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
-        href: '#',
-      },
-      {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
+        label: 'Serviços disponíveis',
+        subLabel: 'Tosa, banho, aplicação de medicamentos, etc.',
         href: '#',
       },
     ],
   },
   {
-    label: 'Find Work',
+    label: 'Saúde',
     children: [
       {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
-      },
-      {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
+        label: 'Consultas com veterinário',
+        subLabel: 'Cuide da saúde do seu pet',
         href: '#',
       },
     ],
-  },
-  {
-    label: 'Learn Design',
-    href: '#',
-  },
-  {
-    label: 'Hire Designers',
-    href: '#',
   },
 ];
+
+const ListHeader = ({ children }: { children: ReactNode }) => {
+  return (
+    <Text fontWeight={'500'} fontSize={'lg'} mb={2}>
+      {children}
+    </Text>
+  );
+};
+
+const SocialButton = ({
+  children,
+  label,
+  href,
+}: {
+  children: ReactNode;
+  label: string;
+  href: string;
+}) => {
+  return (
+    <chakra.button
+      bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
+      rounded={'full'}
+      w={8}
+      h={8}
+      cursor={'pointer'}
+      as={'a'}
+      href={href}
+      display={'inline-flex'}
+      alignItems={'center'}
+      justifyContent={'center'}
+      transition={'background 0.3s ease'}
+      _hover={{
+        bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200'),
+      }}>
+      <VisuallyHidden>{label}</VisuallyHidden>
+      {children}
+    </chakra.button>
+  );
+};

@@ -37,9 +37,9 @@ export function CreateDoctor() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex w='100vw'height='100vh' display='flex' justifyContent='center' alignItems='center'>
+      <Flex w='100vw'height='100vh' display='flex' justifyContent='center' alignItems='center' flexDir='column'>
       <FormControl w={['86vw', '60vw', '30vw']} isInvalid={errors.name || errors.email || errors.password || errors.passwordRecovery || errors.activities || errors.CRMV || errors.especializacao}>
-        <FormLabel htmlFor='name'>Name</FormLabel>
+        <FormLabel htmlFor='name'>Nome</FormLabel>
         <Input
           id='name'
           {...register('name', {
