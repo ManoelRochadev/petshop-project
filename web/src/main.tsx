@@ -11,9 +11,9 @@ import { Dashboard } from './components/Dashboard'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
+  <BrowserRouter>
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-    <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}/>
       <Route path="/register/user" element={<CreateUser/>}/>
@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Route path='/register/doctor' element={<CreateDoctor />} />
       <Route path='/dashboard' element={<Dashboard />} />
     </Routes>
-    </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>
+  </BrowserRouter>
 )
