@@ -217,28 +217,29 @@ routes.get('/consulta/agendar/:email', async (req, res) => {
 
   if (user.length === 0) {
     res.status(422).send({msg: 'sem animais cadrastardo'})
+  } else {
+    const dataAgendamentos = await Dates.find()
+  
+    const doctor = await Doctor.find({})
+  
+    const groomer = await Groomer.find({})
+  
+    const dadosDono = user ? user[0].toJSON().donoAnimal : null
+  
+    const animal = user!.map(data => data.toJSON().dadosAnimal)
+  
+    const nameAnimal = animal.map(event => event.nome)
+  
+  
+    res.send({
+      dadosDono: dadosDono,
+      nomeAnimal: nameAnimal,
+      veterinario: doctor[0].name,
+      funcionario: groomer[0].name,
+      dataAgendamentos
+    })
   }
 
-  const dataAgendamentos = await Dates.find()
-
-  const doctor = await Doctor.find({})
-
-  const groomer = await Groomer.find({})
-
-  const dadosDono = user ? user[0].toJSON().donoAnimal : null
-
-  const animal = user!.map(data => data.toJSON().dadosAnimal)
-
-  const nameAnimal = animal.map(event => event.nome)
-
-
-  res.send({
-    dadosDono: dadosDono,
-    nomeAnimal: nameAnimal,
-    veterinario: doctor[0].name,
-    funcionario: groomer[0].name,
-    dataAgendamentos
-  })
 })
 
 // agendar consulta e apagar horário
