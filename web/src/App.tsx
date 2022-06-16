@@ -36,7 +36,12 @@ import imageLogo from '../assets/ifaro.png'
 export default function App() {
   const { isOpen, onToggle } = useDisclosure();
 
+  const userLogado = localStorage.getItem('email');
   const navigate = useNavigate()
+
+  if (userLogado) {
+    navigate('/dashboard');
+  }
 
   return (
     <>
@@ -97,6 +102,7 @@ export default function App() {
               </LinkRouter>
             </Button>
             <Button
+              onClick={() => navigate('/login/user')}
               display={{ base: 'none', md: 'inline-flex' }}
               fontSize={'sm'}
               fontWeight={600}
@@ -203,7 +209,7 @@ export default function App() {
   );
 }
 
-const DesktopNav = () => {
+export const DesktopNav = () => {
   const linkColor = useColorModeValue('gray.600', 'gray.200');
   const linkHoverColor = useColorModeValue('gray.800', 'white');
   const popoverContentBgColor = useColorModeValue('white', 'gray.800');
@@ -284,7 +290,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   );
 };
 
-const MobileNav = () => {
+export const MobileNav = () => {
   return (
     <Stack
       bg={useColorModeValue('white', 'gray.800')}

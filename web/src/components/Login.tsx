@@ -6,9 +6,11 @@ import {
   Input,
   Button,
   Text,
+  Flex,
 } from '@chakra-ui/react'
 import { FormEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { api } from '../libs/api'
 
 export function Login() {
   const [email, setEmail] = useState('')
@@ -19,12 +21,19 @@ export function Login() {
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
 
-    navigate('/dashboard')
-    
-    console.log(email, password)
+    api.post('/auth/login', {
+      email,
+      password,
+    }).then(event => {
+      localStorage.setItem('email', email)
+
+      navigate('/dashboard')
+    })
+    .catch(error => alert('email ou senha incorretos'))
   }
 
   return (
+    <Flex w='100vw' h='100vh' alignItems='center' justifyContent='center' flexDir='column'>
     <form onSubmit={handleSubmit}>
     <FormControl>
       <FormLabel htmlFor='email'>Email</FormLabel>
@@ -48,8 +57,9 @@ export function Login() {
           >
             Entrar
           </Button>
-    <Text textAlign="center" mt={4}>Ou cadraste-se <a href="/register">aqui</a></Text>
+    <Text textAlign="center" mt={4}>Ou cadraste-se <a href="/register/user">aqui</a></Text>
     </FormControl>
     </form>
+    </Flex>
   )
 }
