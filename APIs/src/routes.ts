@@ -213,7 +213,7 @@ routes.post('/animal/register/:email', async (req, res) => {
 routes.get('/consulta/agendar/:email', async (req, res) => {
   const email = req.params.email
 
-  const user = await Animal.findOne({ email: email })
+  const user = await Animal.find({ email: email })
 
   const dataAgendamentos = await Dates.find()
 
@@ -221,13 +221,15 @@ routes.get('/consulta/agendar/:email', async (req, res) => {
 
   const groomer = await Groomer.find({})
 
-  const dadosDono = user!.donoAnimal
+  const dadosDono = user[0].toJSON().donoAnimal
 
-  const nomeAnimal = user!.dadosAnimal.nome
+  const animal = user!.map(data => data.toJSON().dadosAnimal)
+
+  const nameAnimal = animal.map(event => event.nome)
 
   res.send({
     dadosDono,
-    nomeAnimal,
+    nomeAnimal: nameAnimal,
     veterinario: doctor[0].name,
     funcionario: groomer[0].name,
     dataAgendamentos
