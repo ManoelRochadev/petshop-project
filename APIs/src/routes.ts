@@ -9,6 +9,7 @@ import { HistoryConsult } from './models/HistoryConsult'
 import { HistoryAnimal } from './models/HistoryAnimal'
 import { Services } from './models/Services'
 import { Agendarservices } from './models/AgendarService'
+import { error } from 'console'
 
 export const routes = express.Router()
 
@@ -461,7 +462,7 @@ routes.get('/relatorios/:email', async (req, res) => {
 })
 // Login the user de outro projeto
 
-/*
+
 routes.post('/auth/login', async (req, res) => {
   const { email, password } = req.body
 
@@ -475,25 +476,17 @@ routes.post('/auth/login', async (req, res) => {
 
   const user = await User.findOne({ email: email })
 
+  const verifyPassword = user?.toJSON().password
+
   if (!user) {
     return res.status(404).send({ error: 'Usuário não existe' })
   }
 
-  const checkPassword = await bcrypt.compare(password, user.password)
+  const passwordExists = verifyPassword === password ? true : false
 
-  if (!checkPassword) {
-    return res.status(422).send({ error: 'Senha incorreta' })
-  }
-
-  try {
-    const secret = process.env.SECRET
-
-    const token = jwt.sign({ id: user._id }, secret!)
-
-    res.status(200).send({ msg: 'Autenticação realizada com sucesso', token })
-  } catch (error) {
-    console.log(error)
-    res.status(500).send({ error: 'Erro ao fazer login' })
+  if (!passwordExists) {
+    res.status(400).send({msg: 'senha incorreta'})
+  } else {
+    res.send({msg: 'usuário logado com sucesso'})
   }
 })
-*/
