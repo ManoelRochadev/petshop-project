@@ -6,10 +6,7 @@ interface IQueries {
   nomeAnimal: string;
   medico: string;
   descricao: string;
-  horario: {
-    segunda: string;
-    terca: string;
-  };
+  horario: string;
 }
 
 const kittySchema = new Schema<IQueries>({

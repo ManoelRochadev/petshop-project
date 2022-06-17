@@ -19,7 +19,7 @@ routes.get('/gerarDate', async (req, res) => {
   function gerarDate() {
     // gerar data e hora
     const data = new Date()
-    data.setDate(data.getDate() + 8) 
+    data.setDate(data.getDate() + 5) 
     data.setHours(16, 0, 0, 0)
 
     return data
@@ -263,11 +263,11 @@ routes.post('/consulta/marcar/', async (req, res) => {
     nomeAnimal,
     medico,
     descricao,
-    horario
+    horario: horario.data
   })
 
   try {
-    await Dates.deleteOne(horario)
+    await Dates.deleteOne({_id: horario.id})
 
     await dados.save()
 
