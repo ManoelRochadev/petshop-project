@@ -90,9 +90,9 @@ export function AgendarConsulta() {
 
   }
   return (
-    <Flex mt={8} mb={8} w='100%' height='auto' display='flex' justifyContent='center' alignItems='center' flexDir='column'>
+    <Flex h='100vh' w='100vw' justifyContent='center' alignItems='center' flexDir='column'>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl w={['86vw', '60vw', '30vw']} isInvalid={errors.Pet || errors.veterinario || errors.dataconsulta || errors.observacoes}>
+        <FormControl isInvalid={errors.Pet || errors.veterinario || errors.dataconsulta || errors.observacoes}>
           <FormLabel htmlFor='pet'>Nome Pet</FormLabel>
           <Select
             placeholder="Selecione o pet"
