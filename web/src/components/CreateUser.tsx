@@ -6,9 +6,10 @@ import {
   Input,
   Button,
   Flex,
+  Text
 } from '@chakra-ui/react'
 import { api } from '../libs/api'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export function CreateUser() {
   const navigate = useNavigate()
@@ -89,6 +90,7 @@ export function CreateUser() {
       <Button mt={4} width='30%' colorScheme='teal' isLoading={isSubmitting} type='submit'>
         cadastrar
       </Button>
+        <Text mt={4}>Já tem conta? faça login <Link to='/login/user'>aqui</Link></Text>
       </Flex>
     </form>
   )

@@ -377,7 +377,7 @@ const NAV_ITEMS: Array<NavItem> = [
       {
         label: 'Agendar Consulta',
         subLabel: 'Cuide da saúde do seu pet',
-        href: '#',
+        href: '/agendar/consulta/',
       },
     ],
   },

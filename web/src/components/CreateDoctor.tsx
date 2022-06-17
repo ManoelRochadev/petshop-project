@@ -20,7 +20,7 @@ export function CreateDoctor() {
   } = useForm()
 
   function onSubmit(values: any) {
-    api.post('doctor/register/', {
+    api.post('/doctor/register/', {
       name: values.name,
       email: values.email,
       password: values.password,
