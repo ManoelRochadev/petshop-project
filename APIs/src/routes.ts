@@ -19,7 +19,7 @@ routes.get('/gerarDate', async (req, res) => {
   function gerarDate() {
     // gerar data e hora
     const data = new Date()
-    data.setDate(data.getDate() + 5) 
+    data.setDate(data.getDate() + 20) 
     data.setHours(16, 0, 0, 0)
 
     return data
@@ -233,7 +233,6 @@ routes.get('/consulta/agendar/:email', async (req, res) => {
   
     const nameAnimal = animal.map(event => event.nome)
   
-  
     res.send({
       dadosDono: dadosDono,
       nomeAnimal: nameAnimal,
@@ -367,22 +366,29 @@ routes.get('/historico/animal/:email', async (req, res) => {
 routes.get('/servicos/:email', async (req, res) => {
   const email = req.params.email
 
-  const user = await Animal.findOne({ email: email })
+  const user = await Animal.find({ email: email })
 
-  const dataAgendamentos = await Dates.find({})
+  const dataFilter = user.filter(data => data.toJSON().donoAnimal.email === email)
 
-  const servicos = await Services.findOne({}, '-_id')
+  if (dataFilter.length === 0) {
+    res.status(422).send({msg: 'sem animais cadrastardo'})
+  } else {
 
-  const dadosDono = user!.donoAnimal
-
-  const nomeAnimal = user!.dadosAnimal.nome
-
-  res.send({
-    dadosDono,
-    nomeAnimal,
-    servicos: servicos,
-    dataAgendamentos
-  })
+    const dataAgendamentos = await Dates.find({})
+  
+    const servicos = await Services.findOne({}, '-_id')
+  
+    const dadosDono = dataFilter!.map(data => data.toJSON().donoAnimal)
+  
+    const nomeAnimal = dataFilter!.map(data => data.toJSON().dadosAnimal.nome)
+  
+    res.send({
+      dadosDono,
+      nomeAnimal,
+      servicos: servicos?.toJSON().dados,
+      dataAgendamentos
+    })
+  }
 })
 
 // agendar serviço e apagar horário

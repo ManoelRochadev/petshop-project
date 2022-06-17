@@ -1,7 +1,7 @@
 import{ model, Schema } from "mongoose";
 
 interface IServices {
- data: [];
+ dados: string[]
 }
 
 const kittySchema = new Schema<IServices>({});
