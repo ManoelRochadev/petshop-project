@@ -213,20 +213,23 @@ routes.post('/animal/register/:email', async (req, res) => {
 routes.get('/consulta/agendar/:email', async (req, res) => {
   const email = req.params.email
 
-  const user = await Animal.find({ email: email })
+  const user = await Animal.find({ email })
 
-  if (user.length === 0) {
+  const dataFilter = user.filter(data => data.toJSON().donoAnimal.email === email)
+
+  if (dataFilter.length === 0) {
     res.status(422).send({msg: 'sem animais cadrastardo'})
   } else {
+    
     const dataAgendamentos = await Dates.find()
   
     const doctor = await Doctor.find({})
   
     const groomer = await Groomer.find({})
   
-    const dadosDono = user ? user[0].toJSON().donoAnimal : null
+    const dadosDono = dataFilter[0].toJSON().donoAnimal
   
-    const animal = user!.map(data => data.toJSON().dadosAnimal)
+    const animal = dataFilter!.map(data => data.toJSON().dadosAnimal)
   
     const nameAnimal = animal.map(event => event.nome)
   
