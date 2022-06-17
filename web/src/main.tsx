@@ -9,6 +9,7 @@ import { CreateGroomer } from './components/CreateGroomer'
 import { CreateDoctor } from './components/CreateDoctor'
 import { Dashboard } from './components/Dashboard'
 import { Login } from './components/Login'
+import { PetRegister } from './components/PetRegister'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Route path='/register/doctor' element={<CreateDoctor />} />
       <Route path='/dashboard' element={<Dashboard />} />
       <Route path='/login/user' element={<Login />}/>
+      <Route path='/register/pet' element={<PetRegister />}/>
     </Routes>
     </ChakraProvider>
   </React.StrictMode>

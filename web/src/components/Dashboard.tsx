@@ -1,21 +1,39 @@
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
-import { Box, Flex, IconButton, useColorModeValue, useDisclosure, Text, useBreakpointValue, Stack, Button, Collapse, Img } from "@chakra-ui/react";
+import {
+  Box, Flex, IconButton, useColorModeValue, useDisclosure, Text, useBreakpointValue, Stack, Button, Collapse, Img, Heading, Container
+} from "@chakra-ui/react";
 import imageLogo from '../../assets/ifaro.png'
 import { useNavigate, Link as LinkRouter } from 'react-router-dom';
 import { DesktopNav, MobileNav } from "../App";
+import { api } from "../libs/api";
+import { useEffect, useState } from "react";
 
 export function Dashboard() {
   const { isOpen, onToggle } = useDisclosure();
   const navigate = useNavigate();
+  const [animais, setAnimals] = useState([]);
 
   function destroySession() {
     localStorage.removeItem('email')
     navigate('/')
   }
 
+  const email = localStorage.getItem('email')
+
+  if (!email) {
+    navigate('/')
+  }
+
+  useEffect(() => {
+    api.get(`/consulta/agendar/${email}`)
+      .then(data => setAnimals(data.data.nomeAnimal))
+      .catch(error => 'erro')
+  }, []);
+
+  const animaisList = animais.map((animal, key) => animal != null ? <Text key={key}>{animal}</Text> : null)
   return (
     <>
-    <Box display='block'>
+      <Box display='block'>
         <Flex
           bg={useColorModeValue('white', 'gray.800')}
           color={useColorModeValue('gray.600', 'white')}
@@ -65,11 +83,11 @@ export function Dashboard() {
               borderRadius={'md'}
               bg='green.200'
               _hover={{
-                bg:  'green.400',
+                bg: 'green.400',
               }
               }
             >
-                Sair
+              Sair
             </Button>
           </Stack>
         </Flex>
@@ -78,9 +96,73 @@ export function Dashboard() {
           <MobileNav />
         </Collapse>
       </Box>
-    <div>
-      <h1>Olá {localStorage.getItem('email')}</h1>
-    </div>
+      {animais.length === 0 ? (
+        <Flex w='100vw' h='85vh' alignItems='center' justifyContent='center' flexDir='column'>
+          <Heading
+            fontSize={'xl'}
+            mb={4}
+          >
+            Você não possui pet cadastrado
+          </Heading>
+          <Stack
+            direction={'column'}
+            spacing={3}
+            align={'center'}
+            alignSelf={'center'}
+            position={'relative'}>
+            <Button
+              type='button'
+              onClick={() => navigate('/register/pet')}
+              colorScheme={'green'}
+              bg={'green.400'}
+              rounded={'full'}
+              px={6}
+              _hover={{
+                bg: 'green.500',
+              }}>
+              Cadastrar seu pet aqui
+            </Button>
+          </Stack>
+        </Flex>
+      ) : (
+        <Container maxW={'3xl'}>
+          <Stack
+            as={Box}
+            textAlign={'center'}
+            spacing={{ base: 8, md: 14 }}
+            py={{ base: 20, md: 36 }}>
+            <Stack
+              direction={'column'}
+              spacing={3}
+              align={'center'}
+              alignSelf={'center'}
+              position={'relative'}>
+              <Text
+                colorScheme={'green'}
+                rounded={'full'}
+                px={6}
+                fontSize={'xl'}
+              >
+                Você possui {animais.length} pet(s) cadastrado(s)
+              </Text>
+              {animaisList}
+              <Box>
+              <Button
+                onClick={() => navigate('/register/pet')}
+                variant={'ghost'}
+                size={'sm'}
+                bg={'green.400'}
+                color='white'
+                _hover={{ color: 'white' }}
+              >
+                Cadastrar novo animal
+              </Button>
+              </Box>
+            </Stack>
+          </Stack>
+        </Container>
+      )
+      }
     </>
   )
 }

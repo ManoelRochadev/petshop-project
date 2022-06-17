@@ -365,7 +365,7 @@ const NAV_ITEMS: Array<NavItem> = [
     label: 'Serviços',
     children: [
       {
-        label: 'Serviços disponíveis',
+        label: 'Agendar serviço',
         subLabel: 'Tosa, banho, aplicação de medicamentos, etc.',
         href: '#',
       },
@@ -375,7 +375,7 @@ const NAV_ITEMS: Array<NavItem> = [
     label: 'Saúde',
     children: [
       {
-        label: 'Consultas com veterinário',
+        label: 'Agendar Consulta',
         subLabel: 'Cuide da saúde do seu pet',
         href: '#',
       },
