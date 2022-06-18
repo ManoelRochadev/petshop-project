@@ -32,7 +32,7 @@ interface DateProps {
    datasGeradas: Date;
 }
 
-export function AgendarConsulta() {
+export function AgendarService() {
   const navigate = useNavigate()
   const userLocalStorage = localStorage.getItem("email");
   if (!userLocalStorage) {
@@ -40,21 +40,18 @@ export function AgendarConsulta() {
   }
   
   const emailDono = localStorage.getItem('email')
-  const [userData, setUserData] = useState<UserProps>({} as UserProps)
+  
   const [user, setUser] = useState<string>('')
-  const [email, setEmail] = useState<string>('')
   const [petData, setPetData] = useState<string[]>([])
-  const [veterinario, setVeterinario] = useState<string>('')
+  const [servico, setServico] = useState<string[]>([])
   const [date, setDate] = useState<[DateProps]>([{}] as [DateProps])
 
   useEffect(() => {
-    api.get(`/consulta/agendar/${emailDono}`).then(event => {
-      setUserData(event.data)
-      setUser(event.data.dadosDono.nome)
+    api.get(`/servicos/${emailDono}`).then(event => {
       setPetData(event.data.nomeAnimal)
-      setVeterinario(event.data.veterinario)
       setDate(event.data.dataAgendamentos)
-      setEmail(event.data.dadosDono.email)
+      setServico(event.data.servicos)
+      setUser(event.data.dadosDono.nome)
     })
   }, [])
 
@@ -72,18 +69,17 @@ export function AgendarConsulta() {
 
     const id = date.substring(date2 + 2)
 
-    api.post('consulta/marcar/', {
+    api.post(`/agendar/servico/${emailDono}`, {
       nomeDono: user,
-      emailDono: email,
       nomeAnimal: values.pet,
-      medico: veterinario,
+      servico: values.service,
       descricao: values.observacoes,
+      _id: id,
       horario: {
         data: values.dataconsulta,
-        id: id
       }
     }).then(event => {
-      alert('Consulta marcada com sucesso!')
+      alert('Serviço marcado com sucesso!')
       navigate('/dashboard')
     })
     .catch(error => console.log(error))
@@ -91,7 +87,7 @@ export function AgendarConsulta() {
   }
   return (
     <Flex h='100vh' w='100vw' justifyContent='center' alignItems='center' flexDir='column'>
-      <Text as={'h1'} fontSize={'3xl'} mb={8} fontFamily='heading'>Agendar consulta</Text>
+      <Text as={'h1'} fontSize={'3xl'} mb={8} fontFamily='heading'>Agendar serviço</Text>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={errors.Pet || errors.veterinario || errors.dataconsulta || errors.observacoes}>
           <FormLabel htmlFor='pet'>Nome Pet</FormLabel>
@@ -110,16 +106,21 @@ export function AgendarConsulta() {
           <FormErrorMessage>
             {errors.pet && errors.pet.message}
           </FormErrorMessage>
-          <FormLabel htmlFor='veterinário'>Veterinário</FormLabel>
+          <FormLabel htmlFor='pet'>Serviço</FormLabel>
           <Select
-            placeholder="Selecione o veterinário"
-            {...register('veterinario', {
-              required: 'Veterinário é obrigátorio',
+            placeholder="Selecione o serviço para seu pet" 
+            {...register('service', {
+              required: 'Serviço é obrigátorio',
             })}>
-              <option >{veterinario}</option>
-        </Select>
+            {
+              servico.map((data, key) => {
+
+                return <option key={key}>{data}</option>
+              })
+            }
+          </Select>
           <FormErrorMessage>
-            {errors.veterinario && errors.veterinario.message}
+            {errors.service && errors.service.message}
           </FormErrorMessage>
           <FormLabel htmlFor='dataconsulta'>Dia para consulta</FormLabel>
           <Select
@@ -139,15 +140,6 @@ export function AgendarConsulta() {
           </Select>
           <FormErrorMessage>
             {errors.dataconsulta && errors.dataconsulta.message}
-          </FormErrorMessage>
-          <FormLabel htmlFor='observações'>Observações</FormLabel>
-          <Input
-            id='observacoes'
-            type='text'
-            {...register('observacoes')}
-          />
-          <FormErrorMessage>
-            {errors.observacoes && errors.observacoes.message}
           </FormErrorMessage>
         </FormControl>
         <Button mt={4} width='100%' colorScheme='teal' isLoading={isSubmitting} type='submit'>

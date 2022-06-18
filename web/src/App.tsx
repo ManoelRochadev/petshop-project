@@ -367,7 +367,7 @@ const NAV_ITEMS: Array<NavItem> = [
       {
         label: 'Agendar serviço',
         subLabel: 'Tosa, banho, aplicação de medicamentos, etc.',
-        href: '#',
+        href: '/agendar/servico',
       },
     ],
   },
