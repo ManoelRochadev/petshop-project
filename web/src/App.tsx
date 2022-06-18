@@ -137,10 +137,12 @@ export default function App() {
           <Text color={'gray.500'}>
             Para aproveitar melhor o que oferecemos, faça o login ou se é novo por aqui, efetue o cadastro!
             É rápido e fácil! <br/>
+            <Text mt={4}>
             Ei, se você é um médico veterinário e quer se juntar a nós, entre na área veterinário e efetue o cadastro/login.
               Se você é um "groomer", entre na área Groomer e efetue o cadastro/login.
-
+              <br/>
               Será um prazer tê-los conosco!
+            </Text>
           </Text>
           <Stack
             direction={'column'}
