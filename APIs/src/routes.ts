@@ -378,7 +378,7 @@ routes.get('/servicos/:email', async (req, res) => {
   
     const servicos = await Services.findOne({}, '-_id')
   
-    const dadosDono = dataFilter!.map(data => data.toJSON().donoAnimal)
+    const dadosDono = dataFilter[0].toJSON().donoAnimal
   
     const nomeAnimal = dataFilter!.map(data => data.toJSON().dadosAnimal.nome)
   
