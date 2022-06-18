@@ -12,6 +12,8 @@ import { Login } from './components/Login'
 import { PetRegister } from './components/PetRegister'
 import { AgendarConsulta } from './components/AgendarConsulta'
 import { AgendarService } from './components/AgendarService'
+import { AgendarConsultaImage } from './components/AgendarConsultaImage'
+import { AgendarTosaImage } from './components/AgendarTosaImage'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -28,6 +30,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Route path='/register/pet' element={<PetRegister />}/>
       <Route path='/agendar/consulta' element={<AgendarConsulta />}/>
       <Route path='/agendar/servico' element={<AgendarService />}/>
+      <Route path='/consulta' element={<AgendarConsultaImage />}/>
+      <Route path='/servico' element={<AgendarTosaImage />}/>
     </Routes>
     </ChakraProvider>
   </React.StrictMode>

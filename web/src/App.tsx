@@ -373,7 +373,7 @@ const NAV_ITEMS: Array<NavItem> = [
       {
         label: 'Agendar serviço',
         subLabel: 'Tosa, banho, aplicação de medicamentos, etc.',
-        href: '/agendar/servico',
+        href: '/servico',
       },
     ],
   },
@@ -383,7 +383,7 @@ const NAV_ITEMS: Array<NavItem> = [
       {
         label: 'Agendar Consulta',
         subLabel: 'Cuide da saúde do seu pet',
-        href: '/agendar/consulta/',
+        href: '/consulta',
       },
     ],
   },
