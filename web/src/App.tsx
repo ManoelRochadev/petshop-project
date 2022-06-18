@@ -93,10 +93,10 @@ export default function App() {
               variant={'link'}
             >
               <LinkRouter
-              style={{
-                color: '#718096'
-              }}
-              to='/register/user'
+                style={{
+                  color: '#718096'
+                }}
+                to='/register/user'
               >
                 Cadastre-se
               </LinkRouter>
@@ -129,14 +129,18 @@ export default function App() {
           <Heading
             fontWeight={600}
             fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
-            lineHeight={'110%'}>
-            Agende serviços <br />
-            <Text as={'span'} color={'green.400'}>
-              para seu pet
-            </Text>
+            lineHeight={'110%'}
+            color={'green.500'}
+            >
+            Bem-vindo ao nosso site.<br />
           </Heading>
           <Text color={'gray.500'}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, et esse consectetur molestias dolorem voluptatum asperiores consequuntur ad velit illum rerum laudantium doloremque quaerat modi! Sequi corrupti doloremque optio ea.
+            Para aproveitar melhor o que oferecemos, faça o login ou se é novo por aqui, efetue o cadastro!
+            É rápido e fácil! <br/>
+            Ei, se você é um médico veterinário e quer se juntar a nós, entre na área veterinário e efetue o cadastro/login.
+              Se você é um "groomer", entre na área Groomer e efetue o cadastro/login.
+
+              Será um prazer tê-los conosco!
           </Text>
           <Stack
             direction={'column'}
@@ -154,7 +158,7 @@ export default function App() {
               _hover={{
                 bg: 'green.500',
               }}>
-              Agende Agora
+              Cadastre-se
             </Button>
           </Stack>
         </Stack>
