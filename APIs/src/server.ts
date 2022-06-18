@@ -11,13 +11,10 @@ app.use(express.json())
 
 app.use(routes)
 
-const dbUser = process.env.DB_USER
-const dbPassword = process.env.DB_PASS
-const mongoHost = 'containers-us-west-62.railway.app'
-const mongoPort = 7825
+const databaseLink = process.env.MONGODB_URL as string
 
 mongoose
-  .connect(`mongodb://${dbUser}:${dbPassword}@${mongoHost}:${mongoPort}`)
+  .connect(databaseLink)
   .then(() => {
     console.log('Connected to database!')
   })
