@@ -1,6 +1,6 @@
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
-  Box, Flex, IconButton, useColorModeValue, useDisclosure, Text, useBreakpointValue, Stack, Button, Collapse, Img, Heading, Container
+  Box, Flex, IconButton, useColorModeValue, useDisclosure, Text, useBreakpointValue, Stack, Button, Collapse, Img, Heading, Container,
 } from "@chakra-ui/react";
 import imageLogo from '../../assets/ifaro.png'
 import { useNavigate, Link as LinkRouter } from 'react-router-dom';
@@ -8,10 +8,20 @@ import { DesktopNav, MobileNav } from "../App";
 import { api } from "../libs/api";
 import { useEffect, useState } from "react";
 
+interface HitoricoProps {
+  descricao: string;
+  medicamentos: string;
+  realizada: string;
+  retorno: {
+    Adate: string;
+  }
+}
+
 export function Dashboard() {
   const { isOpen, onToggle } = useDisclosure();
   const navigate = useNavigate();
-  const [animais, setAnimals] = useState([]);
+  const [animais, setAnimals] = useState<string[]>([]);
+  const [historico, setHistorico] = useState<[HitoricoProps]>([{}] as [HitoricoProps]);
 
   function destroySession() {
     localStorage.removeItem('email')
@@ -24,11 +34,17 @@ export function Dashboard() {
     navigate('/')
   }
 
+  const animal = animais[0]
+
   useEffect(() => {
     api.get(`/consulta/agendar/${email}`)
       .then(data => setAnimals(data.data.nomeAnimal))
       .catch(error => 'erro')
+
+    api.get(`/historico/animal/${animal}`)
+    .then(data => setHistorico(data.data.historicoConsultas))
   }, []);
+
 
   const animaisList = animais.map((animal, key) => animal != null ? <Text key={key}>{animal}</Text> : null)
   return (
@@ -125,6 +141,7 @@ export function Dashboard() {
           </Stack>
         </Flex>
       ) : (
+        <>
         <Container maxW={'3xl'}>
           <Stack
             as={Box}
@@ -161,6 +178,8 @@ export function Dashboard() {
             </Stack>
           </Stack>
         </Container>
+        
+        </>
       )
       }
     </>
