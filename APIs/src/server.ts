@@ -11,7 +11,7 @@ app.use(express.json())
 
 app.use(routes)
 
-const databaseLink = process.env.MONGODB_URL as string
+const databaseLink = 'mongodb://mongo:h6avAvwcKhhHRniDXbZ3@containers-us-west-62.railway.app:7825'
 
 mongoose
   .connect(databaseLink)
