@@ -35,8 +35,9 @@ interface DateProps {
 export function AgendarService() {
   const navigate = useNavigate()
   const userLocalStorage = localStorage.getItem("email");
+
   if (!userLocalStorage) {
-    navigate("/login/user");
+    navigate('/login/user/')
   }
   
   const emailDono = localStorage.getItem('email')
